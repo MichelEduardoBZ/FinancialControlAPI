@@ -1,8 +1,8 @@
 package com.michel.financial.services;
 
 import com.michel.financial.constants.AccountType;
-import com.michel.financial.dto.Account.AccountDTO;
-import com.michel.financial.dto.Account.EditAccountDTO;
+import com.michel.financial.dto.account.AccountDTO;
+import com.michel.financial.dto.account.EditAccountDTO;
 import com.michel.financial.entities.Account;
 import com.michel.financial.repositories.AccountRepository;
 import com.michel.financial.repositories.ClientRepository;

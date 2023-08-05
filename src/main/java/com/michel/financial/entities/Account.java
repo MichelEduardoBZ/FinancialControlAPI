@@ -4,6 +4,8 @@ import com.michel.financial.constants.AccountType;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity(name = "tb_account")
 public class Account {
@@ -22,5 +24,8 @@ public class Account {
     private Client client;
 
     private Double amount;
+
+    @OneToMany(mappedBy = "account")
+    private List<Recipe> recipes;
 
 }

@@ -1,7 +1,7 @@
 package com.michel.financial.services;
 
-import com.michel.financial.dto.Client.ClientDTO;
-import com.michel.financial.dto.Client.EditClientDTO;
+import com.michel.financial.dto.client.ClientDTO;
+import com.michel.financial.dto.client.EditClientDTO;
 import com.michel.financial.entities.Client;
 import com.michel.financial.repositories.ClientRepository;
 import com.michel.financial.services.exceptions.ResourceNotFoundException;
@@ -34,18 +34,19 @@ public class ClientService {
     }
 
     @Transactional
+    public Page<ClientDTO> searchClients(Pageable pageable) {
+        Page<Client> clients = repository.findAll(pageable);
+        return clients.map(ClientDTO::new);
+    }
+
+
+    @Transactional
     public void deleteClientById(Long id) {
         try {
             repository.deleteById(id);
         } catch (EntityNotFoundException e){
            throw new ResourceNotFoundException("Client does not exist");
         }
-    }
-
-    @Transactional
-    public Page<ClientDTO> searchClients(Pageable pageable) {
-        Page<Client> clients = repository.findAll(pageable);
-        return clients.map(ClientDTO::new);
     }
 
     @Transactional
@@ -59,7 +60,7 @@ public class ClientService {
 
     @Transactional
     public EditClientDTO editClientById(Long id, EditClientDTO clientDTO) {
-        Client client = repository.findById(id).orElseThrow(() -> new RuntimeException("No client found"));
+        Client client = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No client found"));
         client = copyDtoToEntityEdit(clientDTO, client);
         repository.save(client);
         return new EditClientDTO(client);

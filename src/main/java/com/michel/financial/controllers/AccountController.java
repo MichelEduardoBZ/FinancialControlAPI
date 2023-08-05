@@ -1,7 +1,7 @@
 package com.michel.financial.controllers;
 
-import com.michel.financial.dto.Account.AccountDTO;
-import com.michel.financial.dto.Account.EditAccountDTO;
+import com.michel.financial.dto.account.AccountDTO;
+import com.michel.financial.dto.account.EditAccountDTO;
 import com.michel.financial.services.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
