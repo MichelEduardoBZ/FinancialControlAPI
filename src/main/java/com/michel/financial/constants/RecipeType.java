@@ -2,28 +2,10 @@ package com.michel.financial.constants;
 
 public enum RecipeType {
 
-    SALARY(0),
-    GIFT(1),
-    AWARD(2),
-    OTHER(3);
+    SALARY,
+    GIFT,
+    AWARD,
+    OTHER
 
-    private Integer value;
-
-    RecipeType(int value) {
-        this.value = value;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public static RecipeType fromValue(int value) {
-        for (RecipeType type : RecipeType.values()) {
-            if (type.getValue() == value) {
-                return type;
-            }
-        }
-        throw new IllegalArgumentException("Invalid Recipe value: " + value);
-    }
 }
 

@@ -21,6 +21,7 @@ public class Expense {
 
     private LocalDate expectedExpenseDate;
 
+    @Enumerated(EnumType.STRING)
     private ExpenseType expenseType;
 
     @ManyToOne

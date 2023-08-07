@@ -24,7 +24,7 @@ public class AccountDTO {
 
     @NotNull
     @JsonProperty(value = "account_type")
-    private AccountType accountType;
+    private String accountType;
 
     @NotNull(message = "Must contain customer id")
     @JsonProperty(value = "client_id")
@@ -35,7 +35,7 @@ public class AccountDTO {
     public AccountDTO(Account account) {
         this.id = account.getId();
         this.financialInstitution = account.getFinancialInstitution();
-        this.accountType = account.getAccountType();
+        this.accountType = String.valueOf(account.getAccountType());
         this.amount = String.valueOf(account.getAmount());
         this.clientId = String.valueOf(account.getClient().getId());
     }

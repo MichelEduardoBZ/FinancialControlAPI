@@ -26,13 +26,13 @@ public class EditRecipeDTO {
     private String receiptExpenseDate;
 
     @JsonProperty(value = "recipe_type")
-    private RecipeType recipeType;
+    private String recipeType;
 
     public EditRecipeDTO(Recipe recipe) {
         this.id = recipe.getId();
         this.value = String.valueOf(recipe.getValue());
         this.receiptDate = String.valueOf(recipe.getReceiptDate());
         this.receiptExpenseDate = String.valueOf(recipe.getExpectedReceiptDate());
-        this.recipeType = recipe.getRecipeType();
+        this.recipeType = String.valueOf(recipe.getRecipeType());
     }
 }

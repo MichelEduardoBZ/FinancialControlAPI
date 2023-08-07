@@ -65,7 +65,7 @@ public class ExpenseService {
         expense.setValue(Double.parseDouble(dto.getValue()));
         expense.setExpenseDate(LocalDate.parse(dto.getExpenseDate()));
         expense.setExpectedExpenseDate(LocalDate.parse(dto.getExpectedExpenseDate()));
-        expense.setExpenseType(ExpenseType.fromValue(dto.getExpenseType().ordinal()));
+        expense.setExpenseType(ExpenseType.valueOf(dto.getExpenseType()));
         expense.setAccount(accountRepository.findById(Long.valueOf(dto.getAccountId())).orElseThrow(() -> new ResourceNotFoundException("Account not found")));
         return expense;
     }
@@ -99,7 +99,7 @@ public class ExpenseService {
         }
 
         if(dto.getExpenseType() != null){
-            expense.setExpenseType(ExpenseType.fromValue(dto.getExpenseType().ordinal()));
+            expense.setExpenseType(ExpenseType.valueOf(dto.getExpenseType()));
         }
         return expense;
     }

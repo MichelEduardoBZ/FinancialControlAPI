@@ -33,7 +33,13 @@ public class RecipeService {
         recipe = copyDtoToEntity(dto, recipe);
 
         Account account = accountRepository.findById(Long.valueOf(dto.getAccountId())).orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+
+        if(recipe.getValue() < 0){
+            throw  new ResourceNotFoundException("The value cannot be less than zero");
+        }
+
         account.setAmount(account.getAmount() + recipe.getValue());
+
         repository.save(recipe);
 
         return new RecipeDTO(recipe);
@@ -66,13 +72,17 @@ public class RecipeService {
         recipe.setReceiptDate(LocalDate.parse(dto.getReceiptDate()));
         recipe.setExpectedReceiptDate(LocalDate.parse(dto.getExpectedReceiptDate()));
         recipe.setDescription(dto.getDescription());
-        recipe.setRecipeType(RecipeType.fromValue(dto.getRecipeType().ordinal()));
+        recipe.setRecipeType(RecipeType.valueOf(dto.getRecipeType()));
         recipe.setAccount(accountRepository.findById(Long.valueOf(dto.getAccountId())).orElseThrow(() -> new ResourceNotFoundException("Account not found")));
         return recipe;
     }
 
     @Transactional
     public EditRecipeDTO editRecipeByAccountId(Long id, EditRecipeDTO dto) {
+
+        if(Double.parseDouble(dto.getValue()) < 0){
+            throw  new ResourceNotFoundException("The value cannot be less than zero");
+        }
 
         Recipe recipe = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Expense not found"));
 
@@ -100,7 +110,7 @@ public class RecipeService {
         }
 
         if(dto.getRecipeType() != null){
-            recipe.setRecipeType(RecipeType.fromValue(dto.getRecipeType().ordinal()));
+            recipe.setRecipeType(RecipeType.valueOf(dto.getRecipeType()));
         }
         return recipe;
     }

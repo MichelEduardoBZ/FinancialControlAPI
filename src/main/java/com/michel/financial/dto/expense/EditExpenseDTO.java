@@ -27,13 +27,13 @@ public class EditExpenseDTO {
     private String expectedExpenseDate;
 
     @JsonProperty(value = "expense_type")
-    private ExpenseType expenseType;
+    private String expenseType;
 
     public EditExpenseDTO(Expense expense) {
         this.id = expense.getId();
         this.value = String.valueOf(expense.getValue());
         this.expenseDate = String.valueOf(expense.getExpenseDate());
         this.expectedExpenseDate = String.valueOf(expense.getExpectedExpenseDate());
-        this.expenseType = expense.getExpenseType();
+        this.expenseType = String.valueOf(expense.getExpenseType());
     }
 }

@@ -16,7 +16,7 @@ public class Account {
 
     private String financialInstitution;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
     @ManyToOne

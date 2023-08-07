@@ -58,7 +58,7 @@ public class AccountService {
         }
 
         account.setFinancialInstitution(dto.getFinancialInstitution());
-        account.setAccountType(AccountType.fromValue(dto.getAccountType().ordinal()));
+        account.setAccountType(AccountType.valueOf(dto.getAccountType()));
         account.setClient(clientRepository.findById(Long.parseLong(dto.getClientId())).orElseThrow(() -> new ResourceNotFoundException("No client found")));
         return account;
     }

@@ -33,7 +33,7 @@ public class ExpenseDTO {
 
     @NotBlank
     @JsonProperty(value = "expense_type")
-    private ExpenseType expenseType;
+    private String expenseType;
 
     @NotNull(message = "Must contain customer id")
     @JsonProperty(value = "account_id")
@@ -44,7 +44,7 @@ public class ExpenseDTO {
         this.value = String.valueOf(entity.getValue());
         this.expenseDate = String.valueOf(entity.getExpenseDate());
         this.expectedExpenseDate = String.valueOf(entity.getExpectedExpenseDate());
-        this.expenseType = entity.getExpenseType();
+        this.expenseType = String.valueOf(entity.getExpenseType());
         this.accountId = String.valueOf(entity.getAccount().getId());
     }
 

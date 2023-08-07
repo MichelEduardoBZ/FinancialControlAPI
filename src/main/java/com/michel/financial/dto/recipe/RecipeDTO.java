@@ -34,7 +34,7 @@ public class RecipeDTO {
 
     @NotBlank
     @JsonProperty(value = "recipe_type")
-    private RecipeType recipeType;
+    private String recipeType;
 
     @NotNull(message = "Must contain customer id")
     @JsonProperty(value = "account_id")
@@ -46,7 +46,7 @@ public class RecipeDTO {
         this.receiptDate = String.valueOf(entity.getReceiptDate());
         this.expectedReceiptDate = String.valueOf(entity.getExpectedReceiptDate());
         this.description = entity.getDescription();
-        this.recipeType = entity.getRecipeType();
+        this.recipeType = String.valueOf(entity.getRecipeType());
         this.accountId = String.valueOf(entity.getAccount().getId());
     }
 }

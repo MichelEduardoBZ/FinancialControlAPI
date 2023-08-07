@@ -22,6 +22,7 @@ public class Recipe {
 
     private String description;
 
+    @Enumerated(EnumType.STRING)
     private RecipeType recipeType;
 
     @ManyToOne
