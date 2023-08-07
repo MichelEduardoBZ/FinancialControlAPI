@@ -1,4 +1,4 @@
-# <h1>Library API</h1>
+# <h1>Financial Control API</h1>
 
 > Status: Developing⚠️
 
@@ -10,7 +10,8 @@ Create a project with simple functions to put some ideas into practice.
 
 ## 🤯Features implemented in the project
 
-1. CRUD - Account, Client
+1. CRUD - Account, Client, Expense, Recipe
+2. Search by date and type of recipe/expense in Recipe and Expense
 
 ## 🚀Technologies Used:
 
@@ -27,7 +28,7 @@ Create a project with simple functions to put some ideas into practice.
       <td>3.0</td>
       <td>Null</td>
       <td>Null</td>
-      <td>Null</td>s
+      <td>Null</td>
   </tr>
 </table>
 

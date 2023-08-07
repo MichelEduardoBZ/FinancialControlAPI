@@ -9,8 +9,8 @@ public enum RecipeType {
 
     private Integer value;
 
-    RecipeType(int i) {
-        this.value = 1;
+    RecipeType(int value) {
+        this.value = value;
     }
 
     public int getValue() {

@@ -32,14 +32,14 @@ public class ClientController {
         return ResponseEntity.created(uri).body(dto);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/search/{id}")
     @Operation(summary = "Search a customer by ID", method = "GET")
     public ResponseEntity<ClientDTO> searchClientById(@PathVariable Long id){
             ClientDTO dto = service.searchClientById(id);
             return ResponseEntity.ok(dto);
     }
 
-    @GetMapping(value = "/clients")
+    @GetMapping(value = "/search")
     @Operation(summary = "Search all customer", method = "GET")
     public ResponseEntity<Page<ClientDTO>> searchClients(Pageable pageable){
         Page<ClientDTO> dto = service.searchClients(pageable);
@@ -48,13 +48,13 @@ public class ClientController {
 
     @PutMapping(value = "/edit/{id}")
     @Operation(summary = "Edit an account by ID", method = "PUT")
-    public ResponseEntity<EditClientDTO> deleteClientById(@PathVariable Long id, @RequestBody EditClientDTO dto){
+    public ResponseEntity<EditClientDTO> editClientById(@PathVariable Long id, @RequestBody EditClientDTO dto){
         dto = service.editClientById(id, dto);
         return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    @Operation(summary = "Delete an account by ID", method = "DELETE")
+    @Operation(summary = "Delete an client by ID", method = "DELETE")
     public ResponseEntity<Void> deleteClientById(@PathVariable Long id){
         service.deleteClientById(id);
         return ResponseEntity.noContent().build();

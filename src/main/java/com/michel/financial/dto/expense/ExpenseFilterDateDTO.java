@@ -1,4 +1,4 @@
-package com.michel.financial.dto.recipe;
+package com.michel.financial.dto.expense;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecipeFilterDateDTO {
+public class ExpenseFilterDateDTO {
 
     @NotBlank
     @JsonProperty(value = "initial_date")

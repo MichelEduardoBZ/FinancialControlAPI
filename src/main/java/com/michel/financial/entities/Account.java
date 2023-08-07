@@ -28,4 +28,7 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<Recipe> recipes;
 
+    @OneToMany(mappedBy = "account")
+    private List<Expense> expenses;
+
 }
