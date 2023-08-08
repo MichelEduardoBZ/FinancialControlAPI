@@ -1,10 +1,7 @@
 package com.michel.financial.services;
 
 import com.michel.financial.constants.RecipeType;
-import com.michel.financial.dto.recipe.EditRecipeDTO;
-import com.michel.financial.dto.recipe.RecipeDTO;
-import com.michel.financial.dto.recipe.RecipeFilterDateDTO;
-import com.michel.financial.dto.recipe.RecipeFilterTypeDTO;
+import com.michel.financial.dto.recipe.*;
 import com.michel.financial.entities.Account;
 import com.michel.financial.entities.Recipe;
 import com.michel.financial.repositories.AccountRepository;
@@ -17,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeService {
@@ -65,6 +65,20 @@ public class RecipeService {
     public Page<RecipeDTO> searchAllRecipesByType(Pageable pageable, Long id, RecipeFilterTypeDTO dto) {
         Page<Recipe> recipes = repository.findByRecipeType(id, dto.getRecipeType(), pageable);
         return recipes.map(RecipeDTO::new);
+    }
+
+    @Transactional
+    public TotalRecipeDTO searchTotalRecipes(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+        List<Recipe> recipes = repository.findAll();
+
+        double totalValue = 0;
+        for(Recipe x : recipes){
+            if(x.getAccount().getId().equals(account.getId())){
+                totalValue += x.getValue();
+            }
+        }
+        return new TotalRecipeDTO(totalValue);
     }
 
     public Recipe copyDtoToEntity(RecipeDTO dto, Recipe recipe){

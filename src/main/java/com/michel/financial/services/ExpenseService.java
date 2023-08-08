@@ -1,12 +1,11 @@
 package com.michel.financial.services;
 
 import com.michel.financial.constants.ExpenseType;
-import com.michel.financial.dto.expense.EditExpenseDTO;
-import com.michel.financial.dto.expense.ExpenseDTO;
-import com.michel.financial.dto.expense.ExpenseFilterDateDTO;
-import com.michel.financial.dto.expense.ExpenseFilterTypeDTO;
+import com.michel.financial.dto.expense.*;
+import com.michel.financial.dto.recipe.TotalRecipeDTO;
 import com.michel.financial.entities.Account;
 import com.michel.financial.entities.Expense;
+import com.michel.financial.entities.Recipe;
 import com.michel.financial.repositories.AccountRepository;
 import com.michel.financial.repositories.ExpenseRepository;
 import com.michel.financial.services.exceptions.ResourceNotFoundException;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ExpenseService {
@@ -59,6 +59,20 @@ public class ExpenseService {
     public Page<ExpenseDTO> searchAllExpensesByType(Pageable pageable, Long id, ExpenseFilterTypeDTO dto) {
         Page<Expense> expenses = repository.findByExpenseType(id, dto.getExpenseType(), pageable);
         return expenses.map(ExpenseDTO::new);
+    }
+
+    @Transactional
+    public TotalExpenseDTO searchTotalExpenses(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+        List<Expense> expenses = repository.findAll();
+
+        double totalValue = 0;
+        for(Expense x : expenses){
+            if(x.getAccount().getId().equals(account.getId())){
+                totalValue += x.getValue();
+            }
+        }
+        return new TotalExpenseDTO(totalValue);
     }
 
     public Expense copyDtoToEntity(ExpenseDTO dto, Expense expense){

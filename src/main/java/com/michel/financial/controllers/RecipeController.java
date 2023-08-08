@@ -1,10 +1,7 @@
 package com.michel.financial.controllers;
 
 import com.michel.financial.dto.expense.EditExpenseDTO;
-import com.michel.financial.dto.recipe.EditRecipeDTO;
-import com.michel.financial.dto.recipe.RecipeDTO;
-import com.michel.financial.dto.recipe.RecipeFilterDateDTO;
-import com.michel.financial.dto.recipe.RecipeFilterTypeDTO;
+import com.michel.financial.dto.recipe.*;
 import com.michel.financial.services.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -58,6 +55,13 @@ public class RecipeController {
     @Operation(summary = "Search all recipes by filter type", method = "GET")
     public ResponseEntity<Page<RecipeDTO>> searchAllRecipesByType(Pageable pageable, @PathVariable Long id, @RequestBody RecipeFilterTypeDTO dto){
         Page<RecipeDTO> recipeDto = service.searchAllRecipesByType(pageable, id, dto);
+        return ResponseEntity.ok(recipeDto);
+    }
+
+    @GetMapping(value = "/search-total-value/{id}")
+    @Operation(summary = "Search total value of recipes", method = "GET")
+    public ResponseEntity<TotalRecipeDTO> searchTotalRecipes(@PathVariable Long id){
+        TotalRecipeDTO recipeDto = service.searchTotalRecipes(id);
         return ResponseEntity.ok(recipeDto);
     }
 
