@@ -46,7 +46,7 @@ public class ClientController {
         return ResponseEntity.ok(dto);
     }
 
-    @PutMapping(value = "/edit/{id}")
+    @PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Edit an account by ID", method = "PUT")
     public ResponseEntity<EditClientDTO> editClientById(@PathVariable Long id, @RequestBody EditClientDTO dto){
         dto = service.editClientById(id, dto);

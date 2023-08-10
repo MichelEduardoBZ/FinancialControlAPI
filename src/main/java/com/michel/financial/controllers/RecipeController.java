@@ -1,6 +1,5 @@
 package com.michel.financial.controllers;
 
-import com.michel.financial.dto.expense.EditExpenseDTO;
 import com.michel.financial.dto.recipe.*;
 import com.michel.financial.services.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +24,7 @@ public class RecipeController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Add amount to account", method = "POST")
     public ResponseEntity<RecipeDTO> insertRecipe(@RequestBody RecipeDTO dto){
-        dto = service.insertAccount(dto);
+        dto = service.insertRecipe(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
@@ -65,7 +64,7 @@ public class RecipeController {
         return ResponseEntity.ok(recipeDto);
     }
 
-    @PutMapping(value = "/edit/{id}")
+    @PutMapping(value = "/edit/{id}",  consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Edit recipe by account ID", method = "PUT")
     public ResponseEntity<EditRecipeDTO> editRecipeByAccountId(@PathVariable Long id, @RequestBody EditRecipeDTO dto){
         dto = service.editRecipeByAccountId(id, dto);

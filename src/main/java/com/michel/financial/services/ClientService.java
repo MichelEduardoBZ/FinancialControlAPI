@@ -39,6 +39,13 @@ public class ClientService {
         return clients.map(ClientDTO::new);
     }
 
+    @Transactional
+    public EditClientDTO editClientById(Long id, EditClientDTO clientDTO) {
+        Client client = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No client found"));
+        client = copyDtoToEntityEdit(clientDTO, client);
+        repository.save(client);
+        return new EditClientDTO(client);
+    }
 
     @Transactional
     public void deleteClientById(Long id) {
@@ -57,15 +64,6 @@ public class ClientService {
         client.setEmail(dto.getEmail());
         return client;
     }
-
-    @Transactional
-    public EditClientDTO editClientById(Long id, EditClientDTO clientDTO) {
-        Client client = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No client found"));
-        client = copyDtoToEntityEdit(clientDTO, client);
-        repository.save(client);
-        return new EditClientDTO(client);
-    }
-
     @Transactional
     public Client copyDtoToEntityEdit(EditClientDTO dto, Client client){
 

@@ -1,7 +1,6 @@
 package com.michel.financial.entities;
 
 import com.michel.financial.constants.ExpenseType;
-import com.michel.financial.constants.RecipeType;
 import jakarta.persistence.*;
 import lombok.Data;
 

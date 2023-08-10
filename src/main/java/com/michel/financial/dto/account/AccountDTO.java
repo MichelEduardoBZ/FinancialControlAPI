@@ -2,16 +2,13 @@ package com.michel.financial.dto.account;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.michel.financial.entities.Account;
-import com.michel.financial.constants.AccountType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class AccountDTO {
 

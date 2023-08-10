@@ -3,9 +3,11 @@ package com.michel.financial.services;
 import com.michel.financial.constants.AccountType;
 import com.michel.financial.dto.account.AccountDTO;
 import com.michel.financial.dto.account.EditAccountDTO;
+import com.michel.financial.dto.account.TransferDTO;
 import com.michel.financial.entities.Account;
 import com.michel.financial.repositories.AccountRepository;
 import com.michel.financial.repositories.ClientRepository;
+import com.michel.financial.services.exceptions.InsufficientResourceException;
 import com.michel.financial.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,29 @@ public class AccountService {
         }
     }
 
+    @Transactional
+    public TransferDTO transferValue(TransferDTO dto) {
+
+        Account accountSender = repository.findById(Long.parseLong(dto.getAccountSender())).orElseThrow(() -> new ResourceNotFoundException("No account sender found"));
+        Account accountReceive = repository.findById(Long.parseLong(dto.getAccountReceive())).orElseThrow(() -> new ResourceNotFoundException("No account receive found"));
+
+        if(accountSender.getAmount() < Double.parseDouble(dto.getValue())){
+            throw new InsufficientResourceException("Not enough funds to send to another account");
+        }
+
+        accountSender.setAmount(accountSender.getAmount() - Double.parseDouble(dto.getValue()));
+        accountReceive.setAmount(accountReceive.getAmount() + Double.parseDouble(dto.getValue()));
+        return new TransferDTO(accountSender, accountReceive, dto.getValue());
+    }
+
+    @Transactional
+    public EditAccountDTO editAccount(Long id, EditAccountDTO dto) {
+        Account account = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No account found"));
+        account = copyDtoToEntityEdit(dto, account);
+        repository.save(account);
+        return new EditAccountDTO(account);
+    }
+
     public Account copyDtoToEntity(AccountDTO dto, Account account) {
 
         if (dto.getAmount() != null) {
@@ -61,14 +86,6 @@ public class AccountService {
         account.setAccountType(AccountType.valueOf(dto.getAccountType()));
         account.setClient(clientRepository.findById(Long.parseLong(dto.getClientId())).orElseThrow(() -> new ResourceNotFoundException("No client found")));
         return account;
-    }
-
-    @Transactional
-    public EditAccountDTO editAccount(Long id, EditAccountDTO dto) {
-        Account account = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No account found"));
-        account = copyDtoToEntityEdit(dto, account);
-        repository.save(account);
-        return new EditAccountDTO(account);
     }
 
     public Account copyDtoToEntityEdit(EditAccountDTO dto, Account account) {

@@ -2,6 +2,7 @@ package com.michel.financial.controllers;
 
 import com.michel.financial.dto.account.AccountDTO;
 import com.michel.financial.dto.account.EditAccountDTO;
+import com.michel.financial.dto.account.TransferDTO;
 import com.michel.financial.services.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,7 +42,7 @@ public class AccountController {
         return ResponseEntity.ok(dto);
     }
 
-    @PutMapping(value = "/edit/{id}")
+    @PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Edit account by ID", method = "PUT")
     public ResponseEntity<EditAccountDTO> editAccount(@PathVariable Long id, @RequestBody EditAccountDTO dto) {
         dto = service.editAccount(id, dto);
@@ -53,5 +54,12 @@ public class AccountController {
     public ResponseEntity<Void> deleteAccount(@PathVariable Long id) {
         service.deleteAccount(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value =  "/transfer", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Transfer value between accounts", method = "POST")
+    public ResponseEntity<TransferDTO> transferValue(@RequestBody TransferDTO dto) {
+        dto = service.transferValue(dto);
+        return ResponseEntity.ok(dto);
     }
 }

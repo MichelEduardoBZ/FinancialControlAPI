@@ -26,7 +26,7 @@ public class ExpenseController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Add expense to account", method = "POST")
-    public ResponseEntity<ExpenseDTO> insertRecipe(@RequestBody ExpenseDTO dto){
+    public ResponseEntity<ExpenseDTO> insertExpense(@RequestBody ExpenseDTO dto){
         dto = service.insertExpense(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
@@ -67,7 +67,7 @@ public class ExpenseController {
         return ResponseEntity.ok(expenseDto);
     }
 
-    @PutMapping(value = "/edit/{id}")
+    @PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Edit expense by account ID", method = "PUT")
     public ResponseEntity<EditExpenseDTO> editExpenseByAccountId(@PathVariable Long id, @RequestBody EditExpenseDTO dto){
         dto = service.editExpenseByAccountId(id, dto);
